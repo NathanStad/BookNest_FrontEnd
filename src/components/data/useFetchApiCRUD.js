@@ -67,12 +67,23 @@ export function useFetchApiCrud(path, baseUrl = null, additionalHeaders = {}) {
     });
   }
 
+  function login(data, headers = {}, timeout = 5000) {
+    return fetchApiToRef({
+      url: `${path}/login`,
+      data,
+      method: 'POST',
+      headers,
+      timeout,
+    });
+  }
+
   return {
     read,
     readAll,
     create,
     del,
     update,
+    login,
     fetchApiToRef
   };
 }
