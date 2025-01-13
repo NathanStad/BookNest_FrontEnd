@@ -1,0 +1,37 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #E9E1D6;
+  --primary: #593D3B;
+  --title: #707C6A;
+}
+
+body {
+  background-color: var(--background);
+  font-family: 'Poppins', sans-serif;
+  @apply text-sm;
+}
+
+.book-card {
+  @apply flex flex-col items-center px-2;
+}
+
+.book-image {
+  @apply w-28 h-40 object-cover rounded-lg shadow-md mb-2;
+}
+
+.book-title {
+  @apply text-xs font-medium text-primary text-center;
+}
+
+.book-author {
+  @apply text-[10px] text-primary/70 text-center;
+}
+
+.book-genre {
+  @apply text-[10px] italic text-primary/70 text-center;
+}
