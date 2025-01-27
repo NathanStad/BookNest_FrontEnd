@@ -1,9 +1,9 @@
 export interface Book {
-  id: number;
+  _id: number;
   title: string;
-  author: string;
-  genre: string;
-  image: string;
+  author_id: string;
+  genres: Array<string>;
+  cover_image: string;
   isFavorite: boolean;
   isWishlist: boolean;
   isRead: boolean;

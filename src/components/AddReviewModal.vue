@@ -3,7 +3,7 @@ import { ref } from 'vue';
 
 const emit = defineEmits<{
   (e: 'close'): void;
-  (e: 'submit', review: { title: string; content: string; rating: number }): void;
+  (e: 'submit', review: { content: string; rating: number }): void;
 }>();
 
 const goBack = () => {
@@ -18,14 +18,12 @@ const setRating = (value: number) => {
 
 const handleSubmit = () => {
   emit('submit', {
-    title: title.value,
     content: content.value,
     rating: rating.value
   });
   emit('close');
 };
 
-const title = ref('');
 const content = ref('');
 </script>
 
@@ -59,13 +57,6 @@ const content = ref('');
             ⭐
           </button>
         </div>
-
-        <input
-          v-model="title"
-          type="text"
-          placeholder="Donne un titre à ton avis"
-          class="w-full px-4 py-3 rounded-lg bg-background/90 text-title placeholder-title/70 focus:outline-none"
-        />
         
         <textarea
           v-model="content"

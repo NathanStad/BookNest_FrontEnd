@@ -3,17 +3,19 @@ import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router';
 import BookCard from './BookCard.vue';
 import SliderDots from './SliderDots.vue';
+import Book from '../../class/Book.js';
 
 const router = useRouter();
 
 const props = defineProps<{
   title: string;
   books: Array<{
-    id: number;
+    _id: string;
     title: string;
-    author: string;
-    genre: string;
-    image: string;
+    author: Array<string>;
+    genres: Array<string>;
+    cover_image
+      : string;
   }>;
   genre?: string;
 }>();

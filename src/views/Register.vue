@@ -1,35 +1,62 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
-import { useAuth } from '../composables/useAuth';
-import type { RegisterForm } from '../types/auth';
+import axios from 'axios';
 
+// Configuration du routeur
 const router = useRouter();
-const { register } = useAuth();
 const showPassword = ref(false);
 
-const form = ref<RegisterForm>({
+// Données du formulaire
+const form = ref({
   name: '',
   email: '',
   password: ''
 });
-
+// Vérifier si l'utilisateur est déjà connecté
+const checkUserSession = () => {
+  const user = localStorage.getItem('user');
+  if (user) {
+    // Redirige vers la page du profil si l'utilisateur est déjà connecté
+    router.push('/profile');
+  }
+};
+// Fonction pour gérer l'inscription
 const handleSubmit = async () => {
+  const apiUrl = 'https://booknest-restapi.onrender.com/api/users'; // URL de l'API
   try {
-    await register(form.value);
-    router.push('/');
-  } catch (error) {
-    console.error('Registration failed:', error);
+    // Appel API pour créer un utilisateur
+    const response = await axios.post(apiUrl, {
+      username: form.value.name, // Le champ "name" est mappé à "username"
+      email: form.value.email,
+      password: form.value.password
+    });
+
+    console.log('Utilisateur créé avec succès:', response.data);
+    router.push('/'); // Redirige vers la page d'accueil après succès
+  } catch (error: any) {
+    console.error('Erreur lors de l’inscription :', error);
+    if (error.response?.status === 400) {
+      alert('Le nom d’utilisateur ou l’adresse e-mail existe déjà.');
+    } else {
+      alert('Une erreur est survenue lors de la création du compte.');
+    }
   }
 };
 
+// Navigation vers la page de connexion
 const goToLogin = () => {
   router.push('/login');
 };
 
+// Retour à la page précédente
 const goBack = () => {
   router.back();
 };
+// Vérifier si l'utilisateur est déjà connecté lors du montage du composant
+onMounted(() => {
+  checkUserSession();
+});
 </script>
 
 <template>
@@ -56,7 +83,7 @@ const goBack = () => {
             <input
               v-model="form.name"
               type="text"
-              placeholder="Nom"
+              placeholder="Pseudo"
               class="w-full px-4 py-3 rounded-lg bg-background/90 text-primary placeholder-primary/70"
               required
             />
