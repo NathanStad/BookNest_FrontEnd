@@ -290,7 +290,6 @@ const handleAddReview = async (review: { content: string; rating: number }) => {
 
   if (!userId || !bookId) {
     console.error("Utilisateur ou livre non défini.");
-    alert("Erreur : Vous devez être connecté.");
     return;
   }
 
@@ -323,7 +322,6 @@ const handleAddReview = async (review: { content: string; rating: number }) => {
     showAddReview.value = false;
   } catch (error) {
     console.error("Erreur lors de l'ajout de la critique :", error);
-    alert("Impossible d'ajouter la critique. Réessayez plus tard.");
   }
 };
 
